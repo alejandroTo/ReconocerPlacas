@@ -24,13 +24,16 @@ def SelectData(parametro):
     c1 = connect()
     try:
         with c1.cursor() as cursor:
-            consulta = 'select * from Usuario join Placa on id_usario = Usuario_id_usario where numero_placa = ?'
+            consulta = 'select nombre,paterno,materno,direccion,numero_placa  from Usuario join Placa on id_usario = Usuario_id_usario where numero_placa = ?'
             adr = parametro
             # Podemos llamar muchas veces a .execute con datos distintos
             cursor.execute(consulta, parametro)     
             myresult = cursor.fetchall()
-            for x in myresult:
-                print(f'{x}')
+            if len(myresult)>0:
+                print(f'Nombre: {myresult[0][0]} \nApellido Paterno: {myresult[0][1]} \nApellido Materno: {myresult[0][2]}')
+                print(f'Direccion: {myresult[0][3]} \nnumero_placa: {myresult[0][4]}')
+            else:
+                print(f'Usuario con Placa: {parametro} no encontrado')
     except Exception as e:
         print("Ocurrio un error al conectar a SQL Server: ", e)
 def InsertData(nombre, paterno, materno, direccion):
@@ -123,7 +126,7 @@ def captura():
 
 def menu():
     try:
-        opc = int(input("1.Crear usuario. \n2.Detectar Objetos. \n3.salir"))
+        opc = int(input("1.Crear usuario. \n2.Detectar Placa. \n3.salir"))
         return opc
     except Exception as e:
       print("Ingresa una opcion valida", e)
