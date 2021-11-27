@@ -5,7 +5,7 @@ from tkinter import *
 from tkinter import messagebox
 import imutils
 def connect():
-    direccion_servidor = 'DESKTOP-4GCAPQ1\SQLEXPRESS'
+    direccion_servidor = 'DESKTOP-LR7HVFP\SQLEXPRESS'
     nombre_bd = 'placas'
     try:
         conexion = pyodbc.connect(driver='{SQL Server Native Client 11.0}',
@@ -14,7 +14,7 @@ def connect():
                         trusted_connection='yes')
         return conexion
     except Exception as e:
-        print("ocurrio un error al conectar a SQL Server: ", e)
+        print("ocurrió un error al conectar a SQL Server: ", e)
 
 def crearCarpeta():
     if not os.path.exists(Datos):
@@ -35,7 +35,7 @@ def SelectData(parametro):
             else:
                 print(f'Usuario con Placa: {parametro} no encontrado')
     except Exception as e:
-        print("Ocurrio un error al conectar a SQL Server: ", e)
+        print("Ocurrió un error al conectar a SQL Server: ", e)
 def InsertData(nombre, paterno, materno, direccion):
     c1 = connect()
     try:
@@ -51,7 +51,7 @@ def InsertData(nombre, paterno, materno, direccion):
             plate = input("Placa: ")
             InsertPlate(myresult[0][0],plate)
     except Exception as e:
-        print("Ocurrio un error al conectar a SQL Server: ", e)
+        print("Ocurrió un error al conectar a SQL Server: ", e)
 
 def InsertPlate(Usuario_id_usario,plate):
     c1 = connect()
@@ -62,11 +62,11 @@ def InsertPlate(Usuario_id_usario,plate):
             # Podemos llamar muchas veces a .execute con datos distintos
             cursor.execute(consulta,Usuario_id_usario, plate)     
     except Exception as e:
-        print("Ocurrio un error al conectar a SQL Server: ", e)
+        print("Ocurrió un error al conectar a SQL Server: ", e)
 def leer():
     pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract'
     placa = []
-    image = cv2.imread('temporal/objeto_0.jpg')
+    image = cv2.imread('temporal/objeto_04.jpg')
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     gray = cv2.blur(gray,(3,3))
     canny = cv2.Canny(gray,150,200)
@@ -141,7 +141,7 @@ def main():
             nombre = input("Nombre: ")
             paterno = input("Paterno: ")
             materno = input("Materno: ")
-            direccion = input("direccion: ")
+            direccion = input("Dirección: ")
             InsertData(nombre, paterno, materno, direccion)
             #objeto Create Folder
             opc = menu()
@@ -149,9 +149,9 @@ def main():
             leer()
             opc = menu()
         elif opc==3:
-            print("saliendo...")
+            print("Saliendo...")
         else:
-             print("Ingresa una opcion valida")
+             print("Ingresa una opción valida")
              opc = menu()
 
 main()
